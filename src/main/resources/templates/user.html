@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/fontawesome-all.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <meta charset="UTF-8" />
+    <title>Inscription</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="card mx-auto mt-2" style="width: 50%">
+                <h5 class="card-header text-white bg-info">Inscription</h5>
+                <div class="card-body">
+                    <form action="#" method="post" th:action="@{/user}" th:object="${userForm}">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username"  th:field="*{username}"/>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" th:field="*{password}" />
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordCheck">Password check</label>
+                            <input type="password" class="form-control" id="passwordCheck" th:field="*{passwordCheck}" />
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}"></small>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="birthDate">Birth Date</label>
+                                <input type="date" class="form-control" id="birthDate" th:field="*{birthDate}" />
+                                <small class="form-text text-danger" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></small>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="country">Country</label>
+                            <select class="custom-select" id="country" th:field="*{countrySelected}">
+                                <option th:each="country: *{countriesAvailable}" th:value="${country.id}" th:text="${country.name}" />
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Expérience (> 5 ans, sinon, c'est pas la peine)</label>
+                            <input type="number" class="form-control" id="experience" th:field="*{experience}" />
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"></small>
+                        </div>
+                       <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="termsAccepted" th:field="*{termsAccepted}" />
+                            <label class="form-check-label" for="termsAccepted" >I accept to give 1 Million Euro each month</label>
+                           <small class="form-text text-danger" th:if="${#fields.hasErrors('termsAccepted')}" th:errors="*{termsAccepted}"></small>
+                       </div>
+                        <button type="submit" class="btn btn-primary text-right">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ </body>
+</html>
