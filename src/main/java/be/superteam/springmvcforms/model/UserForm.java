@@ -24,7 +24,7 @@ public class UserForm {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
-    private List<SelectItem> countriesAvailable;
+    private List<Country> countriesAvailable;
 
     private int countrySelected;
 
@@ -73,11 +73,11 @@ public class UserForm {
         this.experience = experience;
     }
 
-    public List<SelectItem> getCountriesAvailable() {
+    public List<Country> getCountriesAvailable() {
         return countriesAvailable;
     }
 
-    public void setCountriesAvailable(List<SelectItem> countriesAvailable) {
+    public void setCountriesAvailable(List<Country> countriesAvailable) {
         this.countriesAvailable = countriesAvailable;
     }
 

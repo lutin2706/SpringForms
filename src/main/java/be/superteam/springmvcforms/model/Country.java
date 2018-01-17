@@ -1,15 +1,15 @@
 package be.superteam.springmvcforms.model;
 
-public class SelectItem {
+public class Country {
 
     private long id;
 
     private String name;
 
-    public SelectItem() {
+    public Country() {
     }
 
-    public SelectItem(long id, String name) {
+    public Country(long id, String name) {
         this.id = id;
         this.name = name;
     }

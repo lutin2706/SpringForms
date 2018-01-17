@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/fontawesome-all.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+    <meta charset="UTF-8" />
+    <title>Inscription</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col" th:if="${tripList != null}">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Duration</th>
+                        <th scope="col">Departure Date</th>
+                        <th scope="col">Country</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="trip : *{tripList}" >
+                        <td></td>
+                        <td th:text="${trip.name}"></td>
+                        <td th:text="${trip.duration}"></td>
+                        <td th:text="${trip.departureDate}"></td>
+                        <td th:text="${trip.country}"></td>
+                        <td class="form-inline"><a href="#" th:href="@{'/trip/' + ${trip.uuid}}"><button type="submit" class="btn btn-info mr-2">Modifier</button></a>
+                            <form action="#" th:action="@{/trip/delete}" method="POST">
+                                <input type="hidden" name="uuid" th:value="${trip.uuid}" />
+                                <button type="submit" class="btn btn-info">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="#" type="button" class="btn btn-info" th:href="@{/trip}">Add new trip ...</a>
+        </div>
+        <div class="col" th:if="${trip != null}">
+            <div class="card mx-auto mt-2" style="width: 50%">
+                <h5 class="card-header text-white bg-info">Create/update a trip</h5>
+                <div class="card-body">
+                    <form action="#" method="post" th:action="@{/trip}" th:object="${trip}">
+                        <input type="hidden" th:field="*{uuid}" />
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name"  th:field="*{name}"/>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="duration">Duration</label>
+                            <input type="number" class="form-control" id="duration" th:field="*{duration}" />
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></small>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="departure">Departure Date</label>
+                                <input type="date" class="form-control" id="departure" th:field="*{departureDate}" />
+                                <!--<small class="form-text text-danger" th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></small>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <select class="custom-select" id="country" th:field="*{country}">
+                                <option value="0" label="---- Please choose a country" />
+                                <option th:each="country: *{countriesAvailable}" th:value="${country.id}" th:text="${country.name}" />
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-info">Envoyer</button>
+                    </form>
+                    <a href="#" th:href="@{/trips}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retour à la liste</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
