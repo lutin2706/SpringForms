@@ -2,7 +2,7 @@ package be.superteam.springmvcforms.controller;
 
 import be.superteam.springmvcforms.model.UserForm;
 import be.superteam.springmvcforms.service.CountryService;
-import be.superteam.springmvcforms.service.TripService;
+import be.superteam.springmvcforms.service.impl.TripServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,10 +15,10 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
 
-    private TripService tripService;
+    private TripServiceImpl tripService;
     private CountryService countryService;
 
-    public UserController(TripService tripService, CountryService countryService) {
+    public UserController(TripServiceImpl tripService, CountryService countryService) {
         this.tripService = tripService;
         this.countryService = countryService;
     }
@@ -26,7 +26,7 @@ public class UserController {
     @GetMapping("/user")
     public String user(Model model) {
         UserForm userForm = new UserForm();
-        userForm.setCountriesAvailable(countryService.getAvailableCountries());
+        userForm.setCountriesAvailable(countryService.getList());
         userForm.setCountrySelected(2);
         model.addAttribute("userForm", userForm);
         return "user";
@@ -38,7 +38,7 @@ public class UserController {
             bindingResult.addError(new FieldError("userForm", "passwordCheck", "Passwords must be the same"));
         }
         if (bindingResult.hasErrors()) {
-            userForm.setCountriesAvailable(countryService.getAvailableCountries());
+            userForm.setCountriesAvailable(countryService.getList());
             return "user";
         }
         model.addAttribute("userForm", userForm);
